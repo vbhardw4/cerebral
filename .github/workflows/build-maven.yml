@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Build Spring Boot Application
 
 on:
   push:
@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check Docker Daemon
-        run: docker ps
       - name: Set up Docker
         uses: docker://alpine:3.12
         with:
@@ -22,6 +20,13 @@ jobs:
         env:
           DOCKER_HOST: tcp://localhost:2375
           DOCKER_TLS_CERTDIR: ""
+
+      - name: Export Docker Env Variable
+        run:
+          echo "export DOCKER_HOST='tcp://0.0.0.0:2375'" >> ~/.bashrc
+          source ~/.bashrc
+        id: setup_docker
+
       - name: Start PostgreSQL container
         uses: docker://postgres:12
         with:
@@ -37,10 +42,23 @@ jobs:
                 sleep 1
               done
               set -e
-      - uses: actions/checkout@v2
-      - name: Set up JDK 17
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
         uses: actions/setup-java@v1
         with:
-          java-version: 17
+          java-version: 14
+
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+
+      - name: Run tests
+        run: mvn test
+
+      - name: Stop PostgreSQL container
+        run: |
+          set +e
+          docker container stop $(docker container ls --filter name=postgres -q)
+          set -e
