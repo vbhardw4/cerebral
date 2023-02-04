@@ -19,14 +19,14 @@ jobs:
       with:
         java-version: 11
 
-    - name: Start PostgreSQL container
-      uses: docker://docker:19.03
-      with:
-        args: run --name postgres -e POSTGRES_DB=cerebral -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:12
-
-
     - name: Build with Maven
       run: mvn -B package
 
     - name: Test with Maven
       run: mvn test
+
+    - name: Start PostgreSQL container
+      uses: docker://docker:19.03
+      with:
+        args: run --name postgres -e POSTGRES_DB=cerebral -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:12
+
