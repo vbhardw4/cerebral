@@ -3,7 +3,7 @@ package com.softlabs.cerebral.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softlabs.cerebral.CerebralApplication;
-import com.softlabs.cerebral.modal.Student;
+import com.softlabs.cerebral.model.Student;
 
 import com.softlabs.cerebral.repository.StudentRepository;
 import org.junit.jupiter.api.AfterEach;

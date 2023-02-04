@@ -1,7 +1,7 @@
 package com.softlabs.cerebral.controller;
 
-import com.softlabs.cerebral.modal.Result;
-import com.softlabs.cerebral.modal.Student;
+import com.softlabs.cerebral.model.Result;
+import com.softlabs.cerebral.model.Student;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

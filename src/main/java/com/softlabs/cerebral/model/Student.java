@@ -1,4 +1,4 @@
-package com.softlabs.cerebral.modal;
+package com.softlabs.cerebral.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

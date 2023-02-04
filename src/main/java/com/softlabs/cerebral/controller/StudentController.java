@@ -1,6 +1,6 @@
 package com.softlabs.cerebral.controller;
 
-import com.softlabs.cerebral.modal.Student;
+import com.softlabs.cerebral.model.Student;
 import com.softlabs.cerebral.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

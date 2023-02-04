@@ -1,7 +1,7 @@
 package com.softlabs.cerebral.controller;
 
 
-import com.softlabs.cerebral.modal.Student;
+import com.softlabs.cerebral.model.Student;
 import com.softlabs.cerebral.service.StudentService;
 import org.junit.Before;
 import org.junit.Test;

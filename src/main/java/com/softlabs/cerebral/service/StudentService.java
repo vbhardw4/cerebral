@@ -1,6 +1,6 @@
 package com.softlabs.cerebral.service;
 
-import com.softlabs.cerebral.modal.Student;
+import com.softlabs.cerebral.model.Student;
 
 import com.softlabs.cerebral.repository.StudentRepository;
 
