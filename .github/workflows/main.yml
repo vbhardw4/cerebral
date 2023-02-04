@@ -13,4 +13,4 @@ jobs:
         - 80
     steps:
       - name: Check for dockerenv file
-        run: -it -d --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=postgres -p 5432:5432 postgres
+        run: docker run -it -d --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=postgres -p 5432:5432 postgres
