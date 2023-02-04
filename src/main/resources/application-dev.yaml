@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: cerebral
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cerebral
+    username: postgres
+    password: password
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    org:
+      hibernate: DEBUG
