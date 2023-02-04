@@ -20,7 +20,7 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<String> addStudent(@RequestBody Student student) {
-        studentService.saveStudent(student);
-        return new ResponseEntity<String>("Student created", HttpStatus.CREATED);
+        Student response = studentService.saveStudent(student);
+        return new ResponseEntity<String>(String.format("Student with id %d created",response.getStudentID()), HttpStatus.CREATED);
     }
 }
