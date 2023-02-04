@@ -54,10 +54,14 @@ jobs:
 
     steps:
       - name: Set up Docker
-        uses: docker://docker
+        uses: docker://alpine:3.12
         with:
-          context: .
-          args: --network=host
+          args: echo "Nothing to do."
+        env:
+          DOCKER_HOST: tcp://localhost:2375
+          DOCKER_TLS_CERTDIR: ""
+        id: setup_docker
+        privileged: true
 
       - name: Start PostgreSQL container
         uses: docker://postgres:12
