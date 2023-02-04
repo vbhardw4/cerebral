@@ -13,7 +13,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container: java:11
+    container: openjdk
     steps:
       - name: Start PostgreSQL container
         uses: docker://postgres:12
