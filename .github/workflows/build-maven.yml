@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Check Docker Daemon
         run: docker ps
-      - name: Install Docker-CE
-        run: apt-get install docker-ce
       - name: Set up Docker
         uses: docker://alpine:3.12
         with:
