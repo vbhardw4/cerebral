@@ -27,6 +27,8 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
+      - name: Install dependencies
+        run: mvn dependency:go-offline
       - name: Clear Maven cache
         run: rm -rf $HOME/.m2/repository
       - name: Inspect Maven repository
