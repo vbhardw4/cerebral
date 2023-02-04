@@ -31,8 +31,6 @@ jobs:
         run: mvn dependency:go-offline
       - name: Clear Maven cache
         run: rm -rf $HOME/.m2/repository
-      - name: Inspect Maven repository
-        run: ls -al $HOME/.m2/repository/org/springframework/boot/
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
