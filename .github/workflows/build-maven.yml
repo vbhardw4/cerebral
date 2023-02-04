@@ -5,22 +5,6 @@ on:
     branches:
       - main
 
-env:
-  POSTGRES_DB: mydb
-  POSTGRES_USER: myuser
-  POSTGRES_PASSWORD: mypassword
-  POSTGRES_HOST: postgres
-  POSTGRES_PORT: 5432
-
-services:
-  postgres:
-    image: postgres:12
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_DB: ${{ env.POSTGRES_DB }}
-      POSTGRES_USER: ${{ env.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
 
 jobs:
   build:
@@ -35,18 +19,14 @@ jobs:
       with:
         java-version: 11
 
+    - name: Start PostgreSQL container
+      uses: docker://docker:19.03
+      with:
+        args: run --name postgres -e POSTGRES_DB=cerebral -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:12
+
+
     - name: Build with Maven
       run: mvn -B package
 
     - name: Test with Maven
       run: mvn test
-
-    - name: Start PostgreSQL container
-      uses: docker://docker:19.03
-      env:
-        POSTGRES_DB: ${{ env.POSTGRES_DB }}
-        POSTGRES_USER: ${{ env.POSTGRES_USER }}
-        POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-      with:
-        args: run --name postgres -e POSTGRES_DB=${{ env.POSTGRES_DB }} -e POSTGRES_USER=${{ env.POSTGRES_USER }} -e POSTGRES_PASSWORD=${{ env.POSTGRES_PASSWORD }} -p 5432:5432 postgres:12
-
