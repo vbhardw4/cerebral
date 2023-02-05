@@ -24,6 +24,7 @@ jobs:
         # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: password
+          POSTGRES_DB: cerebral
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -50,9 +51,6 @@ jobs:
         run: |
           echo "POSTGRES_HOST=${{ env.POSTGRES_HOST }}" >> $GITHUB_ENV
           echo "POSTGRES_PORT=${{ env.POSTGRES_PORT }}" >> $GITHUB_ENV
-      
-      - name: Create Database
-        run: CREATE DATABASE cerebral
         
       # Performs a clean installation of all dependencies in the `package.json` file
       # For more information, see https://docs.npmjs.com/cli/ci.html
