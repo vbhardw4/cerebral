@@ -5,7 +5,7 @@ spring:
   application:
     name: cerebral
   datasource:
-    url: jdbc:postgresql://${DB_HOST}:5432/cerebral
+    url: jdbc:postgresql://${POSTGRES_HOST}:5432/cerebral
     username: postgres
     password: password
   jpa:
