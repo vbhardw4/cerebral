@@ -1,4 +1,4 @@
-name: PostgreSQL Service Example
+name: Build Cerebral Application
 on:
   push:
     branches: [ "main" ]
@@ -54,19 +54,16 @@ jobs:
         
       # Performs a clean installation of all dependencies in the `package.json` file
       # For more information, see https://docs.npmjs.com/cli/ci.html
-#       - name: Install dependencies
-#         run: npm ci
 
-#       - name: Connect to PostgreSQL
-        # Runs a script that creates a PostgreSQL table, populates
-        # the table with data, and then retrieves the data
-#         run: node client.js
-        # Environment variables used by the `client.js` script to create
-        # a new PostgreSQL table.
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+        # Environment variables used by the `client.js` script to create
+        # a new PostgreSQL table.
         env:
           # The hostname used to communicate with the PostgreSQL service container
           POSTGRES_HOST: localhost
           # The default PostgreSQL port
           POSTGRES_PORT: 5432
+          # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+      - name: Update dependency graph
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
