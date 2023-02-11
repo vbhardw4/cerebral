@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = CerebralApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//@DataJpaTest
+
 @ActiveProfiles("test")
 public class StudentControllerIntegrationTest {
 
@@ -53,10 +53,11 @@ public class StudentControllerIntegrationTest {
     public Student createFakeStudent() {
 
         Student student = new Student();
-        student.setStudentID(12L);
-        String firstName = "first";
-        String lastName = "name";
-        student.setStudentName(firstName+" "+lastName);
+
+        String firstName = "Michael";
+        String lastName = "Cors";
+        student.setFirstName(firstName);
+        student.setLastName(lastName);
         student.setDob(new Date());
 
         return student;
@@ -64,7 +65,7 @@ public class StudentControllerIntegrationTest {
 
     public void addStudent() {
         // To Add Student in the DB
-        studentRepository.save(student);
+        student.setStudentID(studentRepository.save(student).getStudentID());
     }
 
     @Test
@@ -76,17 +77,20 @@ public class StudentControllerIntegrationTest {
         HttpEntity<String> request = new HttpEntity<>(studentJSON, headers);
         ResponseEntity<String> response = restTemplate.exchange("http://localhost:" + port + "/api/v1/students", HttpMethod.POST ,request, String.class);
 
+        // Convert the returned string to Java Object using object mapper
+        Student returnedStudent = new ObjectMapper().readValue(response.getBody(),Student.class);
+
         // verify the response status and body
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(response.getBody()).isEqualTo(String.format("Student with id %d created",student.getStudentID()));
 
+        assertThat(returnedStudent.getFirstName()).isEqualTo(student.getFirstName());
     }
 
     @Test
     public void testUpdateStudent() throws JsonProcessingException {
         addStudent();
         // Updates the first name of the student
-        student.setStudentName("updated First Name");
+        student.setFirstName("updated First Name");
         String studentJSON = new ObjectMapper().writeValueAsString(student);
         // send a PUT request to the endpoint
         HttpHeaders headers = new HttpHeaders();
@@ -95,7 +99,7 @@ public class StudentControllerIntegrationTest {
         ResponseEntity<String> response = restTemplate.exchange("http://localhost:" + port + "/api/v1/students",HttpMethod.PUT,request,String.class);
         // verify the response status and body
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(response.getBody()).isEqualTo(String.format("Student with id %d updated with name %s",student.getStudentID(),student.getStudentName()));
+        assertThat(response.getBody()).isEqualTo(String.format("Student with id %d updated with name %s",student.getStudentID(),student.getFirstName()));
 
     }
 
