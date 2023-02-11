@@ -12,6 +12,14 @@ spring:
     database-platform:
       - org.hibernate.dialect.H2Dialect
 
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        requestVolumeThreshold: 1
+        errorThresholdPercentage: 50
+        sleepWindowInMilliseconds: 5000
+
 logging:
   level:
     org:

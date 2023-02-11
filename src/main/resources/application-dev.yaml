@@ -12,6 +12,18 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  redis:
+    host: localhost
+    port: 6379
+
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        requestVolumeThreshold: 10
+        errorThresholdPercentage: 50
+        sleepWindowInMilliseconds: 5000
+
 
 logging:
   level:

@@ -1,12 +1,15 @@
 package com.softlabs.cerebral.controller;
 
+import com.softlabs.cerebral.component.StudentUpdatedEvent;
 import com.softlabs.cerebral.model.Student;
 import com.softlabs.cerebral.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/students")
 public class StudentController {
@@ -14,10 +17,20 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    private final ApplicationEventPublisher eventPublisher;
+
+    @Autowired
+    public StudentController(ApplicationEventPublisher eventPublisher) {
+        this.eventPublisher = eventPublisher;
+    }
+
+
     @PostMapping
-    public ResponseEntity<String> addStudent(@RequestBody Student student) {
+    public ResponseEntity<Student> addStudent(@RequestBody Student student) {
         Student response = studentService.saveStudent(student);
-        return new ResponseEntity<String>(String.format("Student with id %d created",response.getStudentID()), HttpStatus.CREATED);
+        // Publish the StudentUpdatedEvent
+        eventPublisher.publishEvent(new StudentUpdatedEvent(student));
+        return new ResponseEntity<Student>(response, HttpStatus.CREATED);
     }
 
     @DeleteMapping
@@ -34,6 +47,6 @@ public class StudentController {
         if(updatedStudent==null) {
             return new ResponseEntity<String>(String.format("Student with id %d not found",student.getStudentID()),HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<String>(String.format("Student with id %d updated with name %s",updatedStudent.getStudentID(),updatedStudent.getStudentName()),HttpStatus.CREATED);
+        return new ResponseEntity<String>(String.format("Student with id %d updated with name %s",updatedStudent.getStudentID(),updatedStudent.getFirstName()),HttpStatus.CREATED);
     }
 }

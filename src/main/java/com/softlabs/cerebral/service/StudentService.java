@@ -32,8 +32,10 @@ public class StudentService {
         Optional<Student> entity = getStudent(student);
         if(entity.isPresent()) {
             Student persistedEntity = entity.get();
-            persistedEntity.setStudentName(student.getStudentName());
+            persistedEntity.setFirstName(student.getFirstName());
+            persistedEntity.setLastName(student.getLastName());
             persistedEntity.setDob(student.getDob());
+            persistedEntity.setAge(student.getAge());
 
             studentRepository.save(persistedEntity);
             return persistedEntity;

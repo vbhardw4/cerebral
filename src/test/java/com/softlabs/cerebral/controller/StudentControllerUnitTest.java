@@ -37,7 +37,8 @@ public class StudentControllerUnitTest {
         student.setStudentID(12L);
         String firstName = "first";
         String lastName = "name";
-        student.setStudentName(firstName+" "+lastName);
+        student.setFirstName(firstName);
+        student.setLastName(lastName);
         student.setDob(new Date());
 
         this.student = student;
@@ -46,18 +47,19 @@ public class StudentControllerUnitTest {
     public void testAddStudent() {
 
         when(studentService.saveStudent(student)).thenReturn(student);
-        ResponseEntity<String> responseEntity = studentController.addStudent(student);
-        assertEquals(String.format("Student with id %d created",student.getStudentID()),responseEntity.getBody());
+        ResponseEntity<Student> responseEntity = studentController.addStudent(student);
+        assertEquals(student.getStudentID(),responseEntity.getBody().getStudentID());
+        assertEquals(student.getFirstName(),responseEntity.getBody().getFirstName());
         assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
 
     }
 
     @Test
     public void testUpdateStudent() {
-        student.setStudentName("New Name");
+        student.setFirstName("First Name");
         when(studentService.updateStudent(student)).thenReturn(student);
         ResponseEntity<String> responseEntity = studentController.updateStudent(student);
-        assertEquals(String.format(String.format("Student with id %d updated with name %s",student.getStudentID(),student.getStudentName())),responseEntity.getBody());
+        assertEquals(String.format(String.format("Student with id %d updated with name %s",student.getStudentID(),student.getFirstName())),responseEntity.getBody());
         assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
 
     }
