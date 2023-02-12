@@ -1,0 +1,12 @@
+apiVersion: v1 # Kubernetes API Version
+kind: Service #Kubernetes' resource kind we are creating
+metadata:
+  name: cerebral-service
+spec:
+  selector:
+    app: cerebral
+  ports:
+    - protocol: "TCP"
+      port: 8080 # The Port that this service is running on in the cluster
+      targetPort: 8080 # The Port exposed by the service.
+  type: NodePort

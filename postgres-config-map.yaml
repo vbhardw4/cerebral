@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+data:
+  host: postgres
+  dbname: cerebral
+  port: "8080"
