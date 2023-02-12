@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cerebral
+spec:
+  selector:
+    matchLabels:
+      app: cerebral
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cerebral
+    spec:
+      containers:
+        - name: cerebral
+          image: cerebral:0.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: host
+
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: port
+
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: dbname
+
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: username
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: password
+
+---
+
+apiVersion: v1 # Kubernetes API Version
+kind: Service #Kubernetes' resource kind we are creating
+metadata:
+  name: cerebral
+spec:
+  selector:
+    app: cerebral
+  ports:
+    - protocol: "TCP"
+      port: 8080 # The Port that this service is running on in the cluster
+      targetPort: 8080 # The Port exposed by the service.
+  type: NodePort
