@@ -55,6 +55,9 @@ apiVersion: v1 # Kubernetes API Version
 kind: Service #Kubernetes' resource kind we are creating
 metadata:
   name: cerebral
+  labels:
+    app: cerebral
+    tier: backend
 spec:
   selector:
     app: cerebral
