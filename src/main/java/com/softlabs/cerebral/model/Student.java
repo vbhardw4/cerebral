@@ -13,7 +13,6 @@ import java.util.Date;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-//    @Column(name = "studentid", unique = true, nullable = false)
     long studentID;
     String firstName;
     String lastName;

@@ -6,3 +6,4 @@ data:
   host: postgres
   dbname: cerebral
   port: "8080"
+  API_HOST: http://127.0.0.1:61562
