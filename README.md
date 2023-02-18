@@ -1,4 +1,6 @@
 # Cerebral
+![Java CI](https://github.com/vbhardw4/cerebral/workflows/Build%20Cerebral%20Application/badge.svg) 
+
 This repository is a backend for the [front-end](https://github.com/vbhardw4/student-result-management-system). This backend is written using below tools and technologies -  
 1. #### Spring-Boot Framework
 2. #### Hibernate 
