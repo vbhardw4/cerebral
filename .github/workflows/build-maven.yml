@@ -4,6 +4,15 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+    # It will ignores changes to certain files and directories in the repository, such as below
+    # Note that **/README.md will take all the README.md files present in this repository
+    paths-ignore:
+      - '**/README.md'
+      - 'kustomize/**'
+      - '.github/workflows/kustomize-build-ci.yaml'
+      - 'terraform/**'
+      - '.github/workflows/terraform-validate-ci.yaml'
+      - '**/kubectl_backend_deployment_script.sh'
 
 env:
   POSTGRES_HOST: localhost
